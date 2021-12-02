@@ -43,7 +43,7 @@ my $base = 'https://adventofcode.com';
 sub slurp {
 	my @lines;
 
-	while (<>) {
+	while (<STDIN>) {
 		chomp;
 		push @lines, $_;
 	}
@@ -55,7 +55,7 @@ sub slurpIterate {
 	my ($fn) = @_;
 
 	my $i = 0;
-	while (<>) {
+	while (<STDIN>) {
 		chomp;
 		$fn->($_, $i++);
 	}
