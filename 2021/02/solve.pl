@@ -7,15 +7,27 @@ use AOC::Utils qw(slurp reduceFn);
 
 use Data::Dumper;
 
-sub solveOne {
-	my ($lines) = @_;
+sub solve {
+	my ($lines, $fn, $init) = @_;
 
-	my $status = reduceFn(
+	my $result = reduceFn(
 		sub {
 			my ($line) = @_;
 
 			return $line =~ m/(.+) (\d+)/;
 		},
+		$fn,
+		$lines,
+		$init,
+	);
+
+	return $result->[0] * $result->[1];
+}
+
+sub solveOne {
+	my ($lines) = @_;
+
+	return solve($lines,
 		sub {
 			my ($acc, $direction, $amount) = @_;
 
@@ -34,22 +46,14 @@ sub solveOne {
 
 			return [$horizontal, $depth];
 		},
-		$lines,
 		[0, 0],
 	);
-
-	return $status->[0] * $status->[1];
 }
 
 sub solveTwo {
 	my ($lines) = @_;
 
-	my $status = reduceFn(
-		sub {
-			my ($line) = @_;
-
-			return $line =~ m/(.+) (\d+)/;
-		},
+	return solve($lines,
 		sub {
 			my ($acc, $direction, $amount) = @_;
 
@@ -68,12 +72,8 @@ sub solveTwo {
 
 			return [$horizontal, $depth, $aim];
 		},
-		$lines,
 		[0, 0, 0],
 	);
-
-	return $status->[0] * $status->[1];
-
 }
 
 sub main {
