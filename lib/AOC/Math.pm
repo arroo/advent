@@ -86,11 +86,7 @@ sub sumRef {
 }
 
 sub sum {
-	my @nums = @_;
-
-	my $total = 0;
-	$total += $_ for @_;
-	return $total;
+	return sumRef(\@_);
 }
 
 sub prodRef {

@@ -8,114 +8,51 @@ use AOC::Utils qw(:all);
 
 use Data::Dumper;
 
+sub solve {
+	my ($lines, $processFn) = @_;
 
-sub extrapolateHorizontalLine {
-	my ($x, $y1, $y2) = @_;
+	my $ret = reduceRegex(
+		qr/^(\d+),(\d+) -> (\d+),(\d+)$/,
+		sub {
+			my ($acc, $matches) = @_;
+			my ($x1, $y1, $x2, $y2) = @$matches;
 
-	my @coords = map { [ $x, $_ ] } min($y1, $y2) .. max($y1, $y2);
+			my $stepX = $x2 <=> $x1;
+			my $stepY = $y2 <=> $y1;
 
-	return \@coords;
-}
+			return $acc unless $processFn->($stepX, $stepY);
 
-sub extrapolateVerticalLine {
-	my ($x1, $x2, $y) = @_;
+			my $steps = max(abs($x2 - $x1), abs($y2 - $y1));
 
-	my @coords = map { [ $_, $y ] } min($x1, $x2) .. max($x1, $x2);
+			for my $i (0 .. $steps) {
+				my $x = $x1 + $stepX * $i;
+				my $y = $y1 + $stepY * $i;
 
-	return \@coords;
-}
+				$acc->{"$x,$y"}++;
+			}
 
-sub extrapolate45Line {
-	my ($x1, $y1, $x2, $y2) = @_;
+			return $acc;
+		},
+		$lines,
+		{},
+	);
 
-	my @coords;
-
-	my $stepX = $x2 > $x1 ? 1 : -1;
-	my $stepY = $y2 > $y1 ? 1 : -1;
-
-	my $diffX = $x2 - $x1;
-	$diffX = $diffX < 0 ? -$diffX : $diffX;
-
-	my $diffY = $y2 - $y1;
-	$diffY = $diffY < 0 ? -$diffY : $diffY;
-
-	die "not 45: $x1, $y1, $x2, $y2\n" unless ($diffX == $diffY);
-
-	for my $i (0 .. $diffX) {
-		push @coords, [$x1 + $stepX * $i, $y1 + $stepY * $i];
-	}
-
-	return \@coords;
+	return scalar grep { $ret->{$_} >= 2 } keys %$ret;
 }
 
 sub solveOne {
 	my ($lines) = @_;
 
-	my $ret = reduce(sub {
-			my ($acc, $line, $i, $lines) = @_;
-
-			my ($x1, $y1, $x2, $y2) = $line =~ /^(\d+),(\d+) -> (\d+),(\d+)$/;
-
-			my $coords;
-
-			if ($x1 == $x2) {
-				$coords = extrapolateHorizontalLine($x1, $y1, $y2);
-
-			} elsif ($y1 == $y2) {
-				$coords = extrapolateVerticalLine($x1, $x2, $y1);
-
-			} else {
-				return $acc;
-			}
-
-			for my $coord (@$coords) {
-				my ($x, $y) = @$coord;
-
-				$acc->{"$x,$y"}++;
-			}
-
-			return $acc;
-		},
-		$lines,
-		{},
-	);
-
-	return scalar grep { $ret->{$_} >= 2 } keys %$ret;
+	return solve($lines, sub {
+		my ($stepX, $stepY) = @_;
+		return $stepX * $stepY == 0;
+	});
 }
 
 sub solveTwo {
 	my ($lines) = @_;
 
-	my $ret = reduce(sub {
-			my ($acc, $line, $i, $lines) = @_;
-
-			my ($x1, $y1, $x2, $y2) = $line =~ /^(\d+),(\d+) -> (\d+),(\d+)$/;
-
-			my $coords;
-
-			if ($x1 == $x2) {
-				$coords = extrapolateHorizontalLine($x1, $y1, $y2);
-
-			} elsif ($y1 == $y2) {
-				$coords = extrapolateVerticalLine($x1, $x2, $y1);
-
-			} else {
-				$coords = extrapolate45Line($x1, $y1, $x2, $y2);
-			}
-
-			for my $coord (@$coords) {
-				my ($x, $y) = @$coord;
-
-				$acc->{"$x,$y"}++;
-			}
-
-			return $acc;
-		},
-		$lines,
-		{},
-	);
-
-	return scalar grep { $ret->{$_} >= 2 } keys %$ret;
+	return solve($lines, sub { return 1 });
 }
 
 
