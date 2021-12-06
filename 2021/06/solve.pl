@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 
+use AOC::Base qw(:all);
 use AOC::Math qw(:all);
 use AOC::Utils qw(:all);
 
@@ -47,20 +48,4 @@ sub solveTwo {
 	return solve($lines, 256);
 }
 
-
-sub main {
-
-	my $input = slurp();
-
-	my $solver = \&solveTwo;
-
-	if (scalar @ARGV >= 1 and $ARGV[0] eq '1') {
-		$solver = \&solveOne;
-	}
-
-	my $solution = $solver->($input);
-
-	print "$solution\n";
-}
-
-main();
+main(\&solveOne, \&solveTwo);
