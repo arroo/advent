@@ -12,7 +12,7 @@ sub solve {
 
 	my $incs = 0;
 
-	for (my $i = $windowSize; $i < scalar @$input; $i++) {
+	for my $i ($windowSize .. $#$input) {
 		if ($input->[$i] > $input->[$i - $windowSize]) {
 			$incs++;
 		}
