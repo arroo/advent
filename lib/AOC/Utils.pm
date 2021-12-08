@@ -27,6 +27,8 @@ our %EXPORT_TAGS = (
 		reduceFn
 		reduceRegex
 		getSingleHashKey
+		vennDiagram
+		transposeLines
 
 		makeInclusiveRangeTest
 		atLeastOne
@@ -191,6 +193,33 @@ sub getSingleHashKey {
 	for my $key (keys %$hash) {
 		return $key;
 	}
+}
+
+# make a venn diagram based on 2 array refs
+sub vennDiagram {
+	my ($A, $B) = @_;
+
+	my %AHash = map { $_ => undef } @$A;
+	my %BHash = map { $_ => undef } @$B;
+
+	my $both = intersectionHash(\%AHash, \%BHash);
+	my @onlyA = grep { ! exists $BHash{$_} } @$A;
+	my @onlyB = grep { ! exists $AHash{$_} } @$B;
+
+	return \@onlyA, $both, \@onlyB;
+}
+
+# transpose lines of characters
+sub transposeLines {
+	my ($lines) = @_;
+
+	my @lines;
+
+	for my $i (0 .. $#$lines) {
+		
+	}
+
+	return \@lines;
 }
 
 # close over a range and return a test indicating whether a value lies within it
