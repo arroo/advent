@@ -3,19 +3,10 @@
 use warnings;
 use strict;
 
-use POSIX;
-
 use AOC::Base qw(:all);
-use AOC::Math qw(:all);
 use AOC::Utils qw(:all);
 
 use Data::Dumper;
-
-sub makeSegmentSignal {
-	my ($sig) = @_;
-
-	return join('', sort { $a cmp $b } split //, $sig);
-}
 
 sub splitStrings {
 	my ($re, @strings) = @_;
@@ -118,6 +109,12 @@ sub solveLine {
 	}
 
 	return \@output;
+}
+
+sub makeSegmentSignal {
+	my ($sig) = @_;
+
+	return join('', sort { $a cmp $b } split //, $sig);
 }
 
 sub solve {
