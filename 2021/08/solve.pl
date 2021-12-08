@@ -11,43 +11,24 @@ use AOC::Utils qw(:all);
 
 use Data::Dumper;
 
-sub solveLineOne {
-	my ($signals, $digits) = @_;
-
-	die "bad signals\n" unless (scalar @$signals == 10);
-	die "bad digits\n" unless (scalar @$digits == 4);
-
-	my @output;
-	for my $d (@$digits) {
-		if (length($d) == 3) {
-			push @output, 7;
-		} elsif (length($d) == 4) {
-			push @output, 4;
-		} elsif (length($d) == 7) {
-			push @output, 8;
-		} elsif (length($d) == 2) {
-			push @output, 1;
-		}
-	}
-
-	return \@output;
-}
-
 sub solveOne {
 	my ($lines) = @_;
 
-	my $total = 0;
-	for my $line (@$lines) {
-		my ($signalPatterns, $digits) = split / \| /, $line;
+	my %needles = map { $_ => undef } 1,4,7,8;
 
-		my $res = solveLineOne([split / /, $signalPatterns], [split / /, $digits]);
+	return reduce(
+		sub {
+			my ($acc, $line) = @_;
 
-		$total += scalar @$res;
+			my ($signalPatterns, $digits) = split / \| /, $line;
 
-		print "$signalPatterns : $digits\n";
-	}
+			my $res = solveLine([map { makeSegmentSignal($_) } split / /, $signalPatterns], [map { makeSegmentSignal($_) } split / /, $digits]);
 
-	return $total;
+			return $acc + scalar grep { exists $needles{$_} } @$res;
+		},
+		$lines,
+		0,
+	);
 }
 
 sub makeSegmentSignal {
@@ -56,19 +37,13 @@ sub makeSegmentSignal {
 	return join('', sort { $a cmp $b } split //, $sig);
 }
 
-sub stringOverhang {
-	my ($one, $two) = @_;
-
-
-}
-
 sub splitStrings {
 	my ($re, @strings) = @_;
 
 	return map { [ split $re, $_] } @strings;
 }
 
-sub solveLineTwo {
+sub solveLine {
 	my ($signals, $digits) = @_;
 
 	my %signalToNumber = map { $_ => undef } @$signals;
@@ -168,17 +143,19 @@ sub solveLineTwo {
 sub solveTwo {
 	my ($lines) = @_;
 
-	my $total = 0;
+	return reduce(
+		sub {
+			my ($acc, $line) = @_;
 
-	for my $line (@$lines) {
-		my ($signalPatterns, $digits) = split / \| /, $line;
+			my ($signalPatterns, $digits) = split / \| /, $line;
 
-		my $res = solveLineTwo([map { makeSegmentSignal($_) } split / /, $signalPatterns], [map { makeSegmentSignal($_) } split / /, $digits]);
+			my $res = solveLine([map { makeSegmentSignal($_) } split / /, $signalPatterns], [map { makeSegmentSignal($_) } split / /, $digits]);
 
-		$total += 0+ join('', @$res);
-	}
-
-	return $total;
+			return $acc + join('', @$res);
+		},
+		$lines,
+		0,
+	);
 }
 
 main(\&solveOne, \&solveTwo);
