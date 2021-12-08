@@ -11,26 +11,6 @@ use AOC::Utils qw(:all);
 
 use Data::Dumper;
 
-sub solveOne {
-	my ($lines) = @_;
-
-	my %needles = map { $_ => undef } 1,4,7,8;
-
-	return reduce(
-		sub {
-			my ($acc, $line) = @_;
-
-			my ($signalPatterns, $digits) = split / \| /, $line;
-
-			my $res = solveLine([map { makeSegmentSignal($_) } split / /, $signalPatterns], [map { makeSegmentSignal($_) } split / /, $digits]);
-
-			return $acc + scalar grep { exists $needles{$_} } @$res;
-		},
-		$lines,
-		0,
-	);
-}
-
 sub makeSegmentSignal {
 	my ($sig) = @_;
 
@@ -140,8 +120,8 @@ sub solveLine {
 	return \@output;
 }
 
-sub solveTwo {
-	my ($lines) = @_;
+sub solve {
+	my ($lines, $valueFn) = @_;
 
 	return reduce(
 		sub {
@@ -149,12 +129,43 @@ sub solveTwo {
 
 			my ($signalPatterns, $digits) = split / \| /, $line;
 
-			my $res = solveLine([map { makeSegmentSignal($_) } split / /, $signalPatterns], [map { makeSegmentSignal($_) } split / /, $digits]);
+			my $values = solveLine(
+				[map { makeSegmentSignal($_) } split / /, $signalPatterns],
+				[map { makeSegmentSignal($_) } split / /, $digits],
+			);
 
-			return $acc + join('', @$res);
+			return $acc + $valueFn->($values);
 		},
 		$lines,
 		0,
+	);
+}
+
+sub solveOne {
+	my ($lines) = @_;
+
+	my %needles = map { $_ => undef } 1,4,7,8;
+
+	return solve(
+		$lines,
+		sub {
+			my ($values) = @_;
+
+			return scalar grep { exists $needles{$_} } @$values;
+		},
+	);
+}
+
+sub solveTwo {
+	my ($lines) = @_;
+
+	return solve(
+		$lines,
+		sub {
+			my ($values) = @_;
+
+			return join('', @$values);
+		},
 	);
 }
 
