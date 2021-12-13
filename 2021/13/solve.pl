@@ -40,9 +40,6 @@ sub foldUp {
 
 			delete $paper->{$pos};
 
-			my $diff = abs($y - $crease);
-
-			#my $newPos = join(',', $x, $crease-$diff);
 			my $newPos = join(',', $x, 2*$crease - $y);
 
 			$paper->{$newPos} = undef;
@@ -63,7 +60,7 @@ sub fold {
 sub display {
 	my ($paper) = @_;
 
-	my @out = '';
+	my @out;
 
 	# find max dimensions
 	my $maxX = max(map { (split /,/, $_)[0] } keys %$paper);
