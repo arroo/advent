@@ -32,6 +32,8 @@ sub neighbours {
 
 	#print "neighbours of $pt are @out\n";
 
+	return \@out;
+
 	return [sort { $graph->{$a} <=> $graph->{$b} } @out];
 }
 
@@ -47,12 +49,36 @@ sub distanceSquared {
 	return $dX * $dX + $dY * $dY;
 }
 
+sub manhattanDistance {
+	my ($A, $B) = @_;
+
+	my ($xA,$yA) = split /,/, $A;
+	my ($xB,$yB) = split /,/, $B;
+
+	my $dX = abs($xA-$xB);
+	my $dY = abs($yA-$yB);
+
+	return $dX + $dY;
+}
 
 sub compare {
 	my ($A, $B, $target) = @_;
 
+	if (not defined $B) {
+		return -1;
+	}
+
+	if (not defined $A) {
+		return 1;
+	}
+
 	my ($posA, $ctA) = @$A;
 	my ($posB, $ctB) = @$B;
+
+	return (
+		$ctA <=> $ctB
+		or manhattanDistance($posA, $target) <=> manhattanDistance($posB, $target)
+	);
 
 	if ($ctA < $ctB) {
 		return -1;
@@ -63,8 +89,10 @@ sub compare {
 	}
 
 
-	my $dA = distanceSquared($posA, $target);
-	my $dB = distanceSquared($posB, $target);
+	#my $dA = distanceSquared($posA, $target);
+	#my $dB = distanceSquared($posB, $target);
+	my $dA = manhattanDistance($posA, $target);
+	my $dB = manhattanDistance($posB, $target);
 
 	if ($dA < $dB) {
 		return -1;
@@ -75,6 +103,16 @@ sub compare {
 	}
 
 	return 0;
+}
+
+sub makeCompare {
+	my ($target) = @_;
+
+	return sub {
+		my ($A, $B) = @_;
+
+		return compare($A, $B, $target);
+	};
 }
 
 sub display {
@@ -120,6 +158,42 @@ sub solveOne {
 	return solve($graph);
 }
 
+sub binsearch {
+	my ($compareFn, $elem, $list) = @_;
+
+	# Returns the index of the position before
+	# the one where $s would be found, when $s
+	# is not found.
+
+	my $i = 0;
+	my $j = $#$list;
+
+	for (;;) {
+		my $k = int(($j-$i)/2) + $i;
+
+		my $c = $compareFn->($elem, $list->[$k]);
+
+		if ($c == 0) {
+			return $k;
+		}
+
+		if ($c < 0) {
+			$j = $k - 1;
+
+			if ($i > $j) {
+				return $j;
+			}
+
+		} else {
+			$i = $k + 1;
+
+			if ($i > $j) {
+				return $k;
+			}
+		}
+	}
+}
+
 sub solve {
 	my ($graph) = @_;
 
@@ -132,6 +206,13 @@ sub solve {
 	my @search = (['0,0', 0, {}]);
 	my %seen = ('0,0' => 0);
 	my $it = 0;
+
+	#my $compareFn = makeCompare($target);
+	my $compareFn = sub {
+		my ($A, $B) = @_;
+		return compare($A, $B, $target);
+	};
+
 	while (scalar @search > 0) {
 		$it++;
 		my $node = shift @search;
@@ -155,7 +236,8 @@ sub solve {
 
 		for my $n (@$moves) {
 			my $newTotal = $total + $graph->{$n};
-			my $newNode = [$n, $newTotal, {%$path, $n => undef}];
+			#my $newNode = [$n, $newTotal, {%$path, $n => undef}];
+			my $newNode = [$n, $newTotal];
 
 			if (exists $seen{$n} and $seen{$n} <= $newTotal) {
 				next;
@@ -165,9 +247,15 @@ sub solve {
 
 
 			my $j = 0;
-			$j++ while ($j <= $#search and compare($newNode, $search[$j], $target) >= 0);
+			# slow insertion
+			#$j++ while ($j <= $#search and compare($newNode, $search[$j], $target) >= 0);
 
-			splice @search, $j, 0, $newNode;
+			#if ($j <= $#search) {
+				$j = binsearch($compareFn, $newNode, \@search);
+			#}
+
+
+			splice @search, $j+1, 0, $newNode;
 		}
 
 		#print Dumper(\@search);
