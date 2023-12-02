@@ -8,6 +8,8 @@ require Exporter;
 our @ISA = qw(Exporter);
 our %EXPORT_TAGS = (
 	'all' => [qw(
+		gcd
+		lcm
 		min
 		minRef
 		max
@@ -23,6 +25,22 @@ our %EXPORT_TAGS = (
 	)],
 );
 our @EXPORT_OK = (@{$EXPORT_TAGS{'all'}});
+
+sub gcd {
+	my ($x, $y) = @_;
+
+	while ($x > 0) {
+		($x, $y) = ($y % $x, $x);
+	}
+
+	return $y;
+}
+
+sub lcm {
+	my ($x, $y) = @_;
+
+	($x && $y) and $x / gcd($x, $y) * $y or 0
+}
 
 # redo reduce to avoid the import
 sub reduce {

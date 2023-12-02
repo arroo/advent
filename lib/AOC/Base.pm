@@ -13,9 +13,41 @@ our @ISA = qw(Exporter);
 our %EXPORT_TAGS = (
 	'all' => [qw(
 		main
+		emojis
+		WHITE
+		BLACK
+		RED
+		ORANGE
+		YELLOW
+		GREEN
+		BLUE
+		PURPLE
+		BROWN
 	)],
 );
 our @EXPORT_OK = (@{$EXPORT_TAGS{'all'}});
+
+use constant WHITE  => 'white';
+use constant BLACK  => 'black';
+use constant RED    => 'red';
+use constant ORANGE => 'orange';
+use constant YELLOW => 'yellow';
+use constant GREEN  => 'green';
+use constant BLUE   => 'blue';
+use constant PURPLE => 'purple';
+use constant BROWN  => 'brown';
+
+use constant emojis => (
+	WHITE  => '⬜',
+	BLACK  => '⬛',
+	RED    => '🟥',
+	ORANGE => '🟧',
+	YELLOW => '🟨',
+	GREEN  => '🟩',
+	BLUE   => '🟦',
+	PURPLE => '🟪',
+	BROWN  => '🟫',
+);
 
 sub main {
 	my ($solveOne, $solveTwo) = @_;

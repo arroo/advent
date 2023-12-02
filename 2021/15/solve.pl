@@ -116,7 +116,9 @@ sub makeCompare {
 }
 
 sub display {
-	my ($graph, $visited) = @_;
+	my ($graph, $visited, $seen) = @_;
+
+	my %visited = map { $_ => undef } @$visited;
 
 	my $maxX = max(map { (split /,/, $_)[0] } keys %$graph);
 	my $maxY = max(map { (split /,/, $_)[1] } keys %$graph);
@@ -127,9 +129,17 @@ sub display {
 		for my $x (0 .. $maxX) {
 			my $pos = "$x,$y";
 
-			$string .= "\e[31m" if (exists $visited->{$pos});
+			if (exists $visited{$pos}) {
+				$string .= "\e[31m";
+			} elsif (exists $seen->{$pos}) {
+				$string .= "\e[33m";
+			}
+
 			$string .= $graph->{$pos};
-			$string .= "\e[0m" if (exists $visited->{$pos});
+
+			if (exists $visited{$pos} or exists $seen->{$pos}) {
+				$string .= "\e[0m";
+			}
 		}
 
 		$string .= "\n";
@@ -203,11 +213,11 @@ sub solve {
 	my $targetY = max(map { (split /,/)[1] } keys %$graph);
 	my $target = "$targetX,$targetY";
 
-	my @search = (['0,0', 0, {}]);
+	my @search = (['0,0', 0, ['0,0']]);
 	my %seen = ('0,0' => 0);
+	my %visited = ('0,0' => 0);
 	my $it = 0;
 
-	#my $compareFn = makeCompare($target);
 	my $compareFn = sub {
 		my ($A, $B) = @_;
 		return compare($A, $B, $target);
@@ -219,16 +229,21 @@ sub solve {
 
 		my ($pt, $total, $path) = @$node;
 
+		$visited{$pt} = undef;
 
 		my $string = "\033[2J\033[0;0H";
-		#$string .= display($graph, $path);
-		#$string .= "it:$it pt:$pt tot:$total len:".scalar(%$path)."\n";
-		#print $string;
+		$string .= display($graph, $path, \%visited);
+		$string .= "it:$it pt:$pt tot:$total len:".scalar(@$path)."\n";
+		print $string;
 
 		#print "pt:$pt tot:$total\n";
 		#print Dumper($path);
 
 		if ($pt eq $target) {
+			my $string = "\033[2J\033[0;0H";
+			$string .= display($graph, $path, \%visited);
+			$string .= "it:$it pt:$pt tot:$total len:".scalar(@$path)."\n";
+			print $string;
 			return $total;
 		}
 
@@ -237,7 +252,8 @@ sub solve {
 		for my $n (@$moves) {
 			my $newTotal = $total + $graph->{$n};
 			#my $newNode = [$n, $newTotal, {%$path, $n => undef}];
-			my $newNode = [$n, $newTotal];
+			my $newNode = [$n, $newTotal, [@$path, $n ]];
+			#my $newNode = [$n, $newTotal];
 
 			if (exists $seen{$n} and $seen{$n} <= $newTotal) {
 				next;
@@ -250,10 +266,7 @@ sub solve {
 			# slow insertion
 			#$j++ while ($j <= $#search and compare($newNode, $search[$j], $target) >= 0);
 
-			#if ($j <= $#search) {
-				$j = binsearch($compareFn, $newNode, \@search);
-			#}
-
+			$j = binsearch($compareFn, $newNode, \@search);
 
 			splice @search, $j+1, 0, $newNode;
 		}

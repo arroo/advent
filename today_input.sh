@@ -2,8 +2,11 @@
 
 today=$(date +%Y:%-d)
 
-year=$(echo "${today}" | cut -f1 -d:)
-day=$(echo "${today}" | cut -f2 -d:)
+todayYear=$(echo "${today}" | cut -f1 -d:)
+todayDay=$(echo "${today}" | cut -f2 -d:)
+
+year="${year:-$todayYear}"
+day="${day:-$todayDay}"
 
 #echo "year:${year} day:${day}"
 

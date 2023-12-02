@@ -28,6 +28,8 @@ our %EXPORT_TAGS = (
 		reduceRegex
 		getSingleHashKey
 		vennDiagram
+		forEach
+		randomAccessForEach
 		transposeLines
 
 		makeInclusiveRangeTest
@@ -207,6 +209,26 @@ sub vennDiagram {
 	my @onlyB = grep { ! exists $AHash{$_} } @$B;
 
 	return \@onlyA, $both, \@onlyB;
+}
+
+sub forEach {
+	my ($arr, $fn) = @_;
+
+	for my $i (0 .. $#$arr) {
+		$fn->($arr->[$i], $i, $arr);
+	}
+
+	return undef;
+}
+
+sub randomAccessForEach {
+	my ($arr, $fn) = @_;
+
+	for (my $i = 0; defined $i && 0 <= $i && $i <= $#$arr; ) {
+		$i = $fn->($arr->[$i], $i, $arr);
+	}
+
+	return undef;
 }
 
 # transpose lines of characters
