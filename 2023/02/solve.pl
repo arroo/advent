@@ -17,23 +17,22 @@ sub parse {
 		sub {
 			my ($acc, $line) = @_;
 
+			# Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 			my ($id, @game) = split /[;:] /, $line;
 
-			my @rounds = map { [ split /, / ] } @game;
-
-			my @out;
-			for my $round (@rounds) {
-				my %r;
-				for my $pull (@$round) {
-					my ($count, $colour) = split / /, $pull;
+			my @games;
+			for my $round (map { [ split /, / ] } @game) {
+				my %rounds;
+				for my $balls (@$round) {
+					my ($count, $colour) = split / /, $balls;
 
 					$r{$colour} += $count;
 				}
 
-				push @out, \%r;
+				push @games, \%rounds;
 			}
 
-			push @$acc, \@out;
+			push @$acc, \@games;
 
 			return $acc;
 		},
