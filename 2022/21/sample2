@@ -1,0 +1,7 @@
+root: xxxx + yyyy
+humn: 1
+bbbb: 3
+cccc: 4
+dddd: 5
+xxxx: humn + bbbb
+yyyy: cccc * dddd
