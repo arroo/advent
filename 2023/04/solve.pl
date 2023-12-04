@@ -38,11 +38,6 @@ sub parse {
 sub solveOne {
 	my ($lines) = @_;
 
-
-	my $games = parse($lines);
-
-	print Dumper($games);
-
 	return reduce(
 		sub {
 			my ($acc, $game) = @_;
@@ -51,7 +46,7 @@ sub solveOne {
 
 			return $acc + ($won > 0 ? 2**($won-1) : 0);
 		},
-		$games,
+		parse($lines),
 		0,
 	);
 }
