@@ -17,12 +17,16 @@ sub parse {
 		sub {
 			my ($acc, $line) = @_;
 
-			my ($id, $winningStr, $haveStr) = split / *[:|] +/, $line;
+			my ($id, $winningStr, $have) = split / *[:|] +/, $line;
 
 			my %winning = map {$_=>undef} split / +/, $winningStr;
-			my %have = map{$_=>undef} split / +/, $haveStr;
 
-			push @$acc, [\%winning, \%have, 1];
+			my $won = 0;
+			for my $num (split / +/, $have) {
+				$won++ if (exists $winning{$num});
+			}
+
+			push @$acc, [$won, 1];
 
 			return $acc;
 		},
@@ -43,20 +47,9 @@ sub solveOne {
 		sub {
 			my ($acc, $game) = @_;
 
-			my ($winning, $have) = @$game;
+			my ($won) = @$game;
 
-			my $points = 0;
-			for my $n (keys %$have) {
-				if (exists $winning->{$n}) {
-					if ($points) {
-						$points *= 2;
-					} else {
-						$points = 1;
-					}
-				}
-			}
-
-			return $acc + $points;
+			return $acc + ($won > 0 ? 2**($won-1) : 0);
 		},
 		$games,
 		0,
@@ -70,12 +63,10 @@ sub solveTwo {
 		sub {
 			my ($acc, $game, $i, $arr) = @_;
 
-			my ($winning, $have, $copies) = @$game;
+			my ($won, $copies) = @$game;
 
-			for my $n (keys %$have) {
-				if (exists $winning->{$n}) {
-					$arr->[++$i][2]+=$copies;
-				}
+			for my $n (0 .. $won-1) {
+				$arr->[++$i][1]+=$copies;
 			}
 
 			return $acc + $copies;
