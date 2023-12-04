@@ -16,6 +16,24 @@ sub isNumeric {
 	return $c =~ /[0-9]+/;
 }
 
+sub lookAround {
+	my ($line, $x) = @_;
+
+	# look left
+	my $left = '';
+	for (my $i = $x - 1; $i >= 0 and isNumeric(substr($line, $i, 1)); $i--) {
+		$left = substr($line, $i, 1) . $left;
+	}
+
+	# lok right
+	my $right = '';
+	for (my $i = $x + 1; $i < length($line) and isNumeric(substr($line, $i, 1)); $i++) {
+		$right .= substr($line, $i, 1);
+	}
+
+	return ($left, $right);
+}
+
 sub parse {
 	my ($lines) = @_;
 
@@ -31,84 +49,24 @@ sub parse {
 			next if (isNumeric($char));
 
 			# symbol so look around
+
+			my @lines = ($line); # look at same line
+			push @lines, $lines->[$j-1] if ($j > 0); # look above
+			push @lines, $lines->[$j+1] if ($j < scalar @$lines); # look below
+
 			my @neighbours;
 
-			# look left
-			my $k;
-			for ($k = $i; $k-1 >=0 and isNumeric(substr($line, $k-1, 1)); $k--) {}
-			if ($k != $i) {
-				push @neighbours, substr($line, $k, $i-$k)+0;
-			}
-
-			# look right
-			for ($k = $i; $k+1 < length($line) and isNumeric(substr($line, $k+1, 1)); $k++) {}
-			if ($k != $i) {
-				push @neighbours, substr($line, $i+1, $k-$i)+0;
-			}
-
-			# look above
-			my ($x, $y) = ($i, $j-1);
-			if ($y >= 0) {
-
-				# look up-left
-				my $tl = '';
-				my $k;
-				for ($k = $x; $k-1 >= 0 and isNumeric(substr($lines->[$y], $k-1, 1)); $k--) {}
-				if ($k != $x) { # found
-					$tl = substr($lines->[$y], $k, $x-$k);
-				}
-
-				# look up-right
-				my $tr = '';
-				for ($k = $x; $k+1 < length($lines->[$y]) and isNumeric(substr($lines->[$y],$k+1,1)); $k++) {}
-				if ($k != $x) {
-					$tr = substr($lines->[$y], $x+1, $k-$x);
-				}
-
-				if (isNumeric(substr($lines->[$y], $x, 1))) { # one number above
-
-					my $m = substr($lines->[$y], $x, 1);
-					push @neighbours, "$tl$m$tr"+0;
-
-				} else { # 0 or 2 numbers above
-					if ($tl ne '') {
-						push @neighbours, $tl+0;
+			for my $line (@lines) {
+				my ($left, $right) = lookAround($line, $i);
+				my $mid = substr($line, $i, 1);
+				if (isNumeric($mid)) {
+					push @neighbours, "$left$mid$right"+0;
+				} else {
+					if ($left ne '') {
+						push @neighbours, $left+0;
 					}
-					if ($tr ne '') {
-						push @neighbours, $tr+0;
-					}
-				}
-			}
-
-			# look below
-			($x, $y) = ($i, $j+1);
-			if ($y < scalar @$lines) {
-				# look down-left
-				my $dl = '';
-				my $k;
-				for ($k = $x; $k-1 >= 0 and isNumeric(substr($lines->[$y], $k-1, 1)); $k--) {}
-				if ($k != $x) { # found
-					$dl = substr($lines->[$y], $k, $x-$k);
-				}
-
-				# look down-right
-				my $dr = '';
-				for ($k = $x; $k+1 < length($lines->[$y]) and isNumeric(substr($lines->[$y],$k+1,1)); $k++) {}
-				if ($k != $x) {
-					$dr = substr($lines->[$y], $x+1, $k-$x);
-				}
-
-				if (isNumeric(substr($lines->[$y], $x, 1))) { # one number below
-
-					my $m = substr($lines->[$y], $x, 1);
-					push @neighbours, "$dl$m$dr"+0;
-
-				} else { # 0 or 2 numbers below
-					if ($dl ne '') {
-						push @neighbours, $dl+0;
-					}
-					if ($dr ne '') {
-						push @neighbours, $dr+0;
+					if ($right ne '') {
+						push @neighbours, $right+0;
 					}
 				}
 			}
