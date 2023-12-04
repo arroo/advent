@@ -66,35 +66,23 @@ sub solveOne {
 sub solveTwo {
 	my ($lines) = @_;
 
-	my $games = parse($lines);
-
-	forEach(
-		$games,
+	return reduce(
 		sub {
-			my ($game, $i, $arr) = @_;
+			my ($acc, $game, $i, $arr) = @_;
 
 			my ($winning, $have, $copies) = @$game;
 
-			my $matched = 0;
 			for my $n (keys %$have) {
 				if (exists $winning->{$n}) {
-					$arr->[$i+ ++$matched][2]+=$copies;
+					$arr->[++$i][2]+=$copies;
 				}
 			}
 
-			return;
+			return $acc + $copies;
 		},
-	);
-
-	return reduce(
-		sub {
-			my ($acc, $game) = @_;
-
-			return $acc + $game->[2];
-		},
-		$games,
+		parse($lines),
 		0,
-	)
+	);
 }
 
 main(\&solveOne, \&solveTwo);
