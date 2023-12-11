@@ -237,8 +237,11 @@ sub transposeLines {
 
 	my @lines;
 
-	for my $i (0 .. $#$lines) {
-		
+	for my $y (0 .. $#$lines) {
+		my @yLine = split //, $lines->[$y];
+		for my $x (0 .. $#yLine) {
+			$lines[$x] .= $yLine[$x];
+		}
 	}
 
 	return \@lines;

@@ -23,6 +23,11 @@ our %EXPORT_TAGS = (
 		BLUE
 		PURPLE
 		BROWN
+		bold
+		reset
+		red
+		green
+		blue
 	)],
 );
 our @EXPORT_OK = (@{$EXPORT_TAGS{'all'}});
@@ -37,17 +42,37 @@ use constant BLUE   => 'blue';
 use constant PURPLE => 'purple';
 use constant BROWN  => 'brown';
 
-use constant emojis => (
-	WHITE  => '⬜',
-	BLACK  => '⬛',
-	RED    => '🟥',
-	ORANGE => '🟧',
-	YELLOW => '🟨',
-	GREEN  => '🟩',
-	BLUE   => '🟦',
-	PURPLE => '🟪',
-	BROWN  => '🟫',
-);
+use constant bold  => "\e[1m";
+use constant reset => "\e[0m";
+use constant red   => "\e[31m";
+use constant green => "\e[32m";
+use constant blue  => "\e[34m";
+
+#use constant emojis => (
+#	WHITE  => '⬜',
+#	BLACK  => '⬛',
+#	RED    => '🟥',
+#	ORANGE => '🟧',
+#	YELLOW => '🟨',
+#	GREEN  => '🟩',
+#	BLUE   => '🟦',
+#	PURPLE => '🟪',
+#	BROWN  => '🟫',
+#);
+
+sub emojis {
+	return {
+		WHITE  => '⬜',
+		BLACK  => '⬛',
+		RED    => '🟥',
+		ORANGE => '🟧',
+		YELLOW => '🟨',
+		GREEN  => '🟩',
+		BLUE   => '🟦',
+		PURPLE => '🟪',
+		BROWN  => '🟫',
+	};
+}
 
 sub main {
 	my ($solveOne, $solveTwo) = @_;

@@ -10,6 +10,7 @@ our %EXPORT_TAGS = (
 	'all' => [qw(
 		gcd
 		lcm
+		lcmRef
 		min
 		minRef
 		max
@@ -37,9 +38,32 @@ sub gcd {
 }
 
 sub lcm {
-	my ($x, $y) = @_;
+	my @n = @_;
 
-	($x && $y) and $x / gcd($x, $y) * $y or 0
+	return 0 unless (scalar @n);
+
+	my $lcm = $n[0];
+	my $y;
+	for (my $i = 1; $i < scalar @n; $i++) {
+		$lcm = $lcm / gcd($lcm, $n[$i]) * $n[$i];
+	}
+
+	return $lcm;
+
+	#my ($x, $y) = @_;
+	#($x && $y) and $x / gcd($x, $y) * $y or 0
+}
+
+sub lcmRef {
+	my ($items) = @_;
+
+	my $lcm = 1;
+
+	for my $i (@$items) {
+		$lcm = lcm($lcm, $i);
+	}
+
+	return $lcm;
 }
 
 # redo reduce to avoid the import
