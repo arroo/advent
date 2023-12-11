@@ -42,51 +42,30 @@ sub getHandRank {
 	}
 
 	if (scalar keys %hand == 1) { # five of a kind
-		return $orderedHands[0];
+		return 5;
 	}
 
 	if (scalar keys %hand == 2) { # 4 of a kind or full house
 		if ((reverse sort values %hand)[0] == 4) {
-			return $orderedHands[1];
+			return 4;
 		}
 
-		return $orderedHands[2];
+		return 'F';
 	}
 
 	if (scalar keys %hand == 3) { # trips or two pair
 		if ((reverse sort values %hand)[0] == 3) {
-			return $orderedHands[3];
+			return 3;
 		}
 
-		return $orderedHands[4];
+		return 2;
 	}
 
 	if (scalar keys %hand == 4) {
-		return $orderedHands[5];
+		return 1;
 	}
 
-	return $orderedHands[6]; # high card
-}
-
-
-sub getHandRank2 {
-	my ($hand) = @_;
-
-	my %hand;
-	for my $c (split //, $hand) {
-		$hand{$c}++;
-	}
-
-	my $jokers = delete $hand{'J'} // 0;
-
-	if (0 < $jokers and $jokers < 5) {
-
-		my $mostFrequent = (reverse sort { $a->[1] <=> $b->[1] } map { [$_, $hand{$_}] } keys %hand)[0][0];
-
-		$hand =~ s/J/$mostFrequent/g;
-	}
-
-	return getHandRank($hand);
+	return 'H'; # high card
 }
 
 sub sortHands {

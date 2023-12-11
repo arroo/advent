@@ -33,30 +33,26 @@ sub parse {
 sub solveOne {
 	my ($lines) = @_;
 
-	return reduce(
-		sub {
-			my ($acc, $race) = @_;
+	return solve(reduce(
+		sub{
+			my ($acc, $line, $i, $arr) = @_;
 
-			my ($time, $record) = @$race;
-
-			my $ways = 0;
-			for my $chargeTime (0 .. $time) {
-				my $distance = $chargeTime * ($time - $chargeTime);
-
-				$ways++ if ($distance > $record);
+			my $j = 0;
+			for my $n ($line =~ /(\d+)/g) {
+				$acc->[$j++][$i] = $n;
 			}
 
-			return $acc * $ways;
+			return $acc;
 		},
-		parse($lines),
-		1,
-	);
+		$lines,
+		[],
+	));
 }
 
 sub solveTwo {
 	my ($lines) = @_;
 
-	my $race = reduce(
+	return solve([reduce(
 		sub {
 			my ($acc, $line) = @_;
 
@@ -71,20 +67,40 @@ sub solveTwo {
 		},
 		$lines,
 		[],
-	);
+	)]);
+}
 
 
-	my ($time, $record) = @$race;
 
-	my $ways = 0;
-	for my $chargeTime (0 .. $time) {
-		my $distance = $chargeTime * ($time - $chargeTime);
+sub solve {
+	my ($races) = @_;
 
-		$ways++ if ($distance > $record);
+	my $total = 1;
+
+	for my $race (@$races) {
+		my $ways = 0;
+
+		my ($time, $record) = @$race;
+
+		for my $chargeTime (0 .. $time) {
+			my $distance = $chargeTime * ($time - $chargeTime);
+
+
+			if ($distance > $record) {
+				$ways++;
+
+				print green;
+			} else {
+				print reset;
+			}
+
+			print "$distance\n";
+		}
+
+		$total *= $ways;
 	}
 
-	return $ways;
-
+	return $total;
 }
 
 main(\&solveOne, \&solveTwo);

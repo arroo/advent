@@ -28,7 +28,7 @@ sub parse {
 	);
 }
 
-sub solve1 {
+sub solve {
 	my ($history) = @_;
 
 	my $seenNonzero;
@@ -46,7 +46,7 @@ sub solve1 {
 		push @diffs, $history->[$i] - $history->[$i-1];
 	}
 
-	return $history->[-1] + solve1(\@diffs);
+	return $history->[-1] + solve(\@diffs);
 }
 
 sub solveOne {
@@ -54,39 +54,15 @@ sub solveOne {
 
 	my $parsed = parse($lines);
 
-	print Dumper($parsed);
-
 	return reduce(
 		sub {
 			my ($acc, $history) = @_;
 
-			return $acc + solve1($history);
+			return $acc + solve($history);
 		},
 		$parsed,
 		0,
 	);
-}
-
-
-sub solve2 {
-	my ($history) = @_;
-
-	my $seenNonzero;
-	for my $h (@$history) {
-		if ($h != 0) {
-			$seenNonzero = 1;
-			last;
-		}
-	}
-
-	return 0 unless ($seenNonzero);
-
-	my @diffs;
-	for (my $i = 1; $i < scalar @$history; $i++) {
-		push @diffs, $history->[$i] - $history->[$i-1];
-	}
-
-	return $history->[0] - solve2(\@diffs);
 }
 
 sub solveTwo {
@@ -98,7 +74,7 @@ sub solveTwo {
 		sub {
 			my ($acc, $history) = @_;
 
-			return $acc + solve2($history);
+			return $acc + solve([reverse @$history]);
 		},
 		$parsed,
 		0,
