@@ -13,36 +13,6 @@ $Data::Dumper::Sortkeys = 1;
 use constant ash  => '.';
 use constant rock => '#';
 
-sub parse2 {
-	my ($lines) = @_;
-
-	my $y = 0;
-
-	return reduce(
-		sub {
-			my ($acc, $line, $i) = @_;
-
-			if ($line eq '') {
-				push @$acc, {};
-				$y = 0;
-				return $acc;
-			}
-
-			my @line = split //, $line;
-
-			for my $j (0 .. $#line) {
-				$acc->[-1]{"$j,$y"} = $line[$j];
-			}
-
-			$y++;
-
-			return $acc;
-		},
-		$lines,
-		[{}],
-	);
-}
-
 sub parse {
 	my ($lines) = @_;
 
