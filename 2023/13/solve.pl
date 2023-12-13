@@ -34,65 +34,6 @@ sub parse {
 	);
 }
 
-sub findReflection {
-	my ($frame) = @_;
-
-	BASE: for my $i (0 .. $#$frame - 1) {
-		for my $j (0 .. $i) {
-
-			my $lower = $i - $j;
-			my $upper = $i + $j + 1;
-
-			if ($upper > $#$frame) {
-				last;
-			}
-
-			if ($frame->[$upper] ne $frame->[$lower]) {
-				next BASE;
-			}
-		}
-
-		return $i+1;
-	}
-
-	return -1;
-}
-
-sub findReflection2 {
-	my ($frame) = @_;
-
-	BASE: for my $i (0 .. $#$frame - 1) {
-		my $foundDiff = 0;
-		for my $j (0 .. $i) {
-
-			my $lower = $i - $j;
-			my $upper = $i + $j + 1;
-
-			if ($upper > $#$frame) {
-				last;
-			}
-
-			# stringwise ^ will turn matching characters into a null byte
-			# https://stackoverflow.com/questions/4709537/fast-way-to-find-difference-between-two-strings-of-equal-length-in-perl
-			my $diff = scalar grep { $_ != 0 } unpack("c*", $frame->[$upper] ^ $frame->[$lower]);
-
-			if ($diff == 1) {
-				$foundDiff++;
-			}
-
-			if ($diff > 1) {
-				next BASE;
-			}
-		}
-
-		if ($foundDiff == 1) {
-			return $i+1;
-		}
-	}
-
-	return -1;
-}
-
 sub solve {
 	my ($lines, $reflectionFn) = @_;
 
@@ -123,13 +64,74 @@ sub solve {
 sub solveOne {
 	my ($lines) = @_;
 
-	return solve($lines, \&findReflection);
+	return solve(
+		$lines,
+		sub {
+			my ($frame) = @_;
+
+			FRAME: for my $i (0 .. $#$frame - 1) {
+				for my $j (0 .. $i) {
+
+					my $lower = $i - $j;
+					my $upper = $i + $j + 1;
+
+					if ($upper > $#$frame) {
+						last;
+					}
+
+					if ($frame->[$upper] ne $frame->[$lower]) {
+						next FRAME;
+					}
+				}
+
+				return $i+1;
+			}
+
+			return -1;
+		},
+	);
 }
 
 sub solveTwo {
 	my ($lines) = @_;
 
-	return solve($lines, \&findReflection2);
+	return solve(
+		$lines,
+		sub {
+			my ($frame) = @_;
+
+			FRAME: for my $i (0 .. $#$frame - 1) {
+				my $foundDiff = 0;
+				for my $j (0 .. $i) {
+
+					my $lower = $i - $j;
+					my $upper = $i + $j + 1;
+
+					if ($upper > $#$frame) {
+						last;
+					}
+
+					# stringwise ^ will turn matching characters into a null byte
+					# https://stackoverflow.com/questions/4709537/fast-way-to-find-difference-between-two-strings-of-equal-length-in-perl
+					my $diff = scalar grep { $_ != 0 } unpack("c*", $frame->[$upper] ^ $frame->[$lower]);
+
+					if ($diff == 1) {
+						$foundDiff++;
+					}
+
+					if ($diff > 1) {
+						next FRAME;
+					}
+				}
+
+				if ($foundDiff == 1) {
+					return $i+1;
+				}
+			}
+
+			return -1;
+		},
+	);
 }
 
 main(\&solveOne, \&solveTwo);
