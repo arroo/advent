@@ -41,18 +41,15 @@ sub solve {
 		sub {
 			my ($acc, $frame, $i) = @_;
 
-			my $row = $reflectionFn->($frame);
-			if ($row > 0) {
+			if ((my $row = $reflectionFn->($frame)) > 0) {
 				$acc += 100*$row;
-			} else {
-				my $col = $reflectionFn->(transposeLines($frame));
-				if ($col > 0) {
-					$acc += $col;
-				} else {
-					die "frame $i has no reflection: " . Dumper($frame, transposeLines($frame));
-				}
-			}
 
+			} elsif ((my $col = $reflectionFn->(transposeLines($frame))) > 0) {
+				$acc += $col;
+
+			} else {
+				die "frame $i has no reflection: " . Dumper($frame, transposeLines($frame));
+			}
 
 			return $acc;
 		},
