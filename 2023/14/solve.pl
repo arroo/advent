@@ -138,11 +138,6 @@ sub solveTwo {
 		$maxY = $y;
 	}
 
-	my $maxX = 0;
-	for (my $x = 0; exists $map->{"$x,0"}; $x++) {
-		$maxX=$x;
-	}
-
 	my $revs = 1_000_000_000;
 
 	my %seen;
@@ -178,14 +173,14 @@ sub solveTwo {
 			my $remaining = $revs - $i;
 			my $cycle = $i - $seen{$key};
 
-			return load($seen[$seen{$key} + $remaining % $cycle - 1]);
+			$map = $seen[$seen{$key} + $remaining % $cycle - 1];
+			last;
 		}
 
 		push @seen, copy($map);
 		$seen{$key} = $i;
 	}
 
-	# if there are no cycles
 	return load($map);
 }
 
