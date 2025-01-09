@@ -19,8 +19,11 @@ our %EXPORT_TAGS = (
 		sumRef
 		prod
 		prodRef
+		dotProd
 		chineseRemainder
 		manhattan
+		manhattanXY
+		determinant
 		lineLineIntersection
 		lineSegmentLineSegmentIntersection
 	)],
@@ -149,6 +152,23 @@ sub prod {
 	return prodRef(\@_);
 }
 
+# the dot product of 2 vectors
+sub dotProd {
+	my ($A, $B) = @_;
+
+	die "first arg not array: " . Dumper($A) unless (ref $A eq 'ARRAY');
+	die "second arg not array: " . Dumper($B) unless (ref $B eq 'ARRAY');
+
+	die "arrays not of same length\n" unless (scalar @$A == scalar @$B);
+
+	my $out = 1;
+	for my $i (0 .. $#$A) {
+		$out += $A->[$i] * $B->[$i];
+	}
+
+	return $out;
+}
+
 # apply the chinese remainder theorem - assumes it's solvable (mod values are coprime):
 # find smallest 'x' s.t.
 # x = a1 mod m1
@@ -211,6 +231,18 @@ sub manhattan {
 	return abs($xD - $xS) + abs($yD - $yS);
 }
 
+sub manhattanXY {
+	my ($xS, $yS, $xD, $yD) = @_;
+
+	return ($xD - $xS), ($yD - $yS);
+}
+
+sub determinant {
+	my ($x1, $y1, $x2, $y2) = @_;
+
+	return $x1 * $y2 - $x2 * $y1;
+}
+
 sub lineLineIntersection {
 	my ($x0, $y0, $x1, $y1, $x2, $y2, $x3, $y3) = @_;
 
@@ -230,12 +262,12 @@ sub lineLineIntersection {
 	my $b2 = $fst->($C) - $fst->($D);
 	my $c2 = $a2 * $fst->($C) + $b2 * $scd->($C);
 
-	my $determinant = $a1 * $b2 - $a2 * $b1;
+	my $det = determinant($a1, $a2, $b1, $b2);
 
-	return undef if $determinant == 0;
+	return undef if $det == 0;
 
-	my $x = ($b2 * $c1 - $b1 * $c2) / $determinant;
-	my $y = ($a1 * $c2 - $a2 * $c1) / $determinant;
+	my $x = ($b2 * $c1 - $b1 * $c2) / $det;
+	my $y = ($a1 * $c2 - $a2 * $c1) / $det;
 
 	return [$x, $y];
 }

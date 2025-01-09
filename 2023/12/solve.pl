@@ -55,6 +55,7 @@ sub iterate {
 		# remove leading dots
 		$pattern =~ s/\A\.+//;
 
+
 		my $total = 0;
 
 		my $segment = $req->[0];

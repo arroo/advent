@@ -3,6 +3,9 @@ package AOC::Utils;
 use strict;
 use warnings;
 
+use threads;
+use threads::shared;
+
 require Exporter;
 
 use Data::Dumper;
@@ -31,6 +34,7 @@ our %EXPORT_TAGS = (
 		forEach
 		randomAccessForEach
 		transposeLines
+		transpose
 
 		makeInclusiveRangeTest
 		atLeastOne
@@ -45,7 +49,7 @@ our @EXPORT_OK = (@{$EXPORT_TAGS{'all'}});
 my $base = 'https://adventofcode.com';
 
 sub slurp {
-	my @lines;
+	my @lines :shared;
 
 	while (<STDIN>) {
 		chomp;
@@ -245,6 +249,20 @@ sub transposeLines {
 	}
 
 	return \@lines;
+}
+
+sub transpose {
+	my ($arrs) = @_;
+
+	my @transposed;
+
+	for my $row (@$arrs) {
+		for my $col (0 .. $#{$row}) {
+			push @{$transposed[$col]}, $row->[$col];
+		}
+	}
+
+	return \@transposed;
 }
 
 # close over a range and return a test indicating whether a value lies within it

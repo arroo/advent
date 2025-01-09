@@ -3,12 +3,39 @@
 use warnings;
 use strict;
 
+use Time::HiRes qw(gettimeofday tv_interval);
+
 use AOC::Base qw(:all);
 use AOC::Math qw(:all);
 use AOC::Utils qw(:all);
 
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
+
+sub timeit {
+	my ($fn) = @_;
+
+	my $start = [gettimeofday];
+	$fn->();
+	return tv_interval($start);
+}
+
+sub timeWithCache {
+	my %cache;
+
+	my $time = sub {
+		my ($title, $fn) = @_;
+
+		if (not defined $cache{$title}) {
+			$cache{$title} = [0, 0];
+		}
+
+		$cache{$title}[0]++;
+		$cache{$title}[1] += timeit($fn);
+	};
+
+	return \%cache, $time;
+}
 
 sub parse {
 	my ($lines) = @_;
@@ -92,10 +119,12 @@ sub transpose {
 
 	for (my $x = 0; exists $map->{"$x,0"}; $x++) {
 		for (my $y = 0; exists $map->{"$x,$y"}; $y++) {
-			next if (exists $seen{"$x,$y"} or $x == $y);
+			my $from = "$x,$y";
+			my $to = "$y,$x";
+			next if (exists $seen{$from} or $x == $y);
 
-			$seen{"$y,$x"} = undef;
-			($map->{"$x,$y"}, $map->{"$y,$x"}) = ($map->{"$y,$x"}, $map->{"$x,$y"});
+			$seen{$to} = undef;
+			($map->{$from}, $map->{$to}) = ($map->{$to}, $map->{$from});
 		}
 	}
 }
@@ -140,32 +169,34 @@ sub solveTwo {
 
 	my $revs = 1_000_000_000;
 
+	my ($cache, $timer) = timeWithCache();
+
 	my %seen;
 	my @seen;
 
 	for (my $i = 0; $i < $revs; $i++) {
 
 		# north
-		tiltNorth($map);
+		$timer->("tilt", sub {tiltNorth($map)});
 
 		# west
-		transpose($map);
-		tiltNorth($map);
+		$timer->("transpose", sub {transpose($map)});
+		$timer->("tilt", sub {tiltNorth($map)});
 
 		# south
-		transpose($map);
-		flipVertical($map, $maxY);
-		tiltNorth($map);
+		$timer->("transpose", sub {transpose($map)});
+		$timer->("flipV", sub {flipVertical($map, $maxY);});
+		$timer->("tilt", sub {tiltNorth($map)});
 
 		# east
-		transpose($map);
-		flipVertical($map, $maxY);
-		tiltNorth($map);
+		$timer->("transpose", sub {transpose($map)});
+		$timer->("flipV", sub {flipVertical($map, $maxY);});
+		$timer->("tilt", sub {tiltNorth($map)});
 
 		# reset to north
-		flipVertical($map, $maxY);
-		transpose($map);
-		flipVertical($map, $maxY);
+		$timer->("flipV", sub {flipVertical($map, $maxY);});
+		$timer->("transpose", sub {transpose($map)});
+		$timer->("flipV", sub {flipVertical($map, $maxY);});
 
 		my $key = Dumper($map);
 		if (exists $seen{$key}) {
@@ -173,13 +204,15 @@ sub solveTwo {
 			my $remaining = $revs - $i;
 			my $cycle = $i - $seen{$key};
 
-			$map = $seen[$seen{$key} + $remaining % $cycle - 1];
+			$map = $seen[$seen{$key} - 1 + $remaining % $cycle];
 			last;
 		}
 
-		push @seen, copy($map);
+		$timer->("copy", sub {push @seen, copy($map);});
 		$seen{$key} = $i;
 	}
+
+	print Dumper($cache);
 
 	return load($map);
 }

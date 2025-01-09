@@ -71,7 +71,7 @@ sub parseEdges {
 
 		if ($cX == $targetX and $cY == $targetY) {
 			# a winner is you
-			push @{$edges{"$pX,$pY"}}, ["$cX,$cY", $cost];
+			$edges{"$pX,$pY"}{"$cX,$cY"}{$cost} = undef;
 			next;
 		}
 
@@ -79,7 +79,10 @@ sub parseEdges {
 		my $nbrs = neighbours($cX, $cY, $grid, $seen);
 
 		if (scalar @$nbrs > 1) {
-			push @{$edges{"$pX,$pY"}}, ["$cX,$cY", $cost];
+
+			print "splitting ($cX,$cY) into " . (scalar @$nbrs) . "\n";
+
+			$edges{"$pX,$pY"}{"$cX,$cY"}{$cost} = undef;
 			$cost = 0;
 			($pX, $pY) = ($cX, $cY);
 		}
@@ -113,7 +116,7 @@ sub solveOne {
 		'#########.#',
 	];
 
-	if (1) {
+	if (0) {
 		$lines = $fake;
 	}
 
@@ -138,14 +141,16 @@ sub solveOne {
 			next;
 		}
 
-		for my $nbr (@{$edges->{$name}}) {
-			my ($n, $ncost) = @$nbr;
-			my @path = map { $_ } @$path;
-			my %seen = map { $_ => undef } keys %$seen;
+		for my $nbr (keys %{$edges->{$name}}) {
+			for my $ncost (keys %{$edges->{$name}{$nbr}}) {
 
-			print "$name -> $n($ncost)\n";
+				my @path = map { $_ } @$path;
+				my %seen = map { $_ => undef } keys %$seen;
 
-			push @queue, [$n, $cost + $ncost, \@path, \%seen];
+				print "$name -> $nbr($ncost)\n";
+
+				push @queue, [$nbr, $cost + $ncost, \@path, \%seen];
+			}
 		}
 	}
 

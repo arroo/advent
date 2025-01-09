@@ -3,6 +3,9 @@
 use warnings;
 use strict;
 
+use threads;
+use threads::shared;
+
 use AOC::Base qw(:all);
 use AOC::Math qw(:all);
 use AOC::Utils qw(:all);
@@ -18,7 +21,8 @@ sub parse {
 
 	return reduce(
 		sub {
-			my ($acc, $line) = @_;
+			my $line :shared;
+			(my $acc, $line) = @_;
 
 			if ($line eq '') {
 				push @$acc, [];
@@ -35,25 +39,46 @@ sub parse {
 }
 
 sub solve {
-	my ($lines, $reflectionFn) = @_;
+	my $lines :shared;
+	($lines, my $reflectionFn) = @_;
 
-	return reduce(
+	my $threads = reduce(
 		sub {
-			my ($acc, $frame, $i) = @_;
+			my ($acc) = @_;
 
-			if ((my $row = $reflectionFn->($frame)) > 0) {
-				$acc += 100*$row;
+			push @$acc, threads->create(
+				sub {
+					my ($frame, $i) = @_;
 
-			} elsif ((my $col = $reflectionFn->(transposeLines($frame))) > 0) {
-				$acc += $col;
+					if ((my $row = $reflectionFn->($frame)) > 0) {
+						return 100*$row;
 
-			} else {
-				die "frame $i has no reflection: " . Dumper($frame, transposeLines($frame));
-			}
+					} elsif ((my $col = $reflectionFn->(transposeLines($frame))) > 0) {
+						return $col;
+
+					} else {
+						die "frame $i has no reflection: " . Dumper($frame, transposeLines($frame));
+						# what does this do in threads?
+					}
+
+					return -1;
+				},
+				@_[1 .. $#_],
+			);
 
 			return $acc;
 		},
 		parse($lines),
+		[],
+	);
+
+	return reduce(
+		sub {
+			my ($acc, $thread) = @_;
+
+			return $acc + $thread->join();
+		},
+		$threads,
 		0,
 	);
 }

@@ -1,0 +1,676 @@
+digraph {
+graph [overlap=false]
+subgraph cluster_Try_Tiny {
+	label="Try::Tiny";
+	"Try::Tiny::BEGIN@8";
+	"Try::Tiny::BEGIN@7";
+	"Try::Tiny::BEGIN@2";
+	"Try::Tiny::BEGIN@10";
+	"Try::Tiny::BEGIN@16";
+	"Try::Tiny::BEGIN@13";
+}
+subgraph cluster_bytes {
+	label="bytes";
+	"bytes::import";
+}
+subgraph cluster_Exporter {
+	label="Exporter";
+	"Exporter::import";
+	"Exporter::as_heavy";
+	"Exporter::export";
+	"Exporter::CORE:match";
+	"Exporter::CORE:subst";
+}
+subgraph cluster_HTTP_Request {
+	label="HTTP::Request";
+	"HTTP::Request::BEGIN@8";
+	"HTTP::Request::BEGIN@3";
+	"HTTP::Request::BEGIN@4";
+}
+subgraph cluster_Scalar_Util {
+	label="Scalar::Util";
+	"Scalar::Util::BEGIN@10";
+	"Scalar::Util::BEGIN@9";
+}
+subgraph cluster_warnings {
+	label="warnings";
+	"warnings::register_categories";
+	"warnings::_mkMask";
+	"warnings::unimport";
+	"warnings::import";
+	"warnings::_bits";
+	"warnings::_expand_bits";
+	"warnings::CORE:match";
+}
+subgraph cluster_Data_Dumper {
+	label="Data::Dumper";
+	"Data::Dumper::BEGIN@23";
+	"Data::Dumper::BEGIN@21";
+	"Data::Dumper::BEGIN@278";
+	"Data::Dumper::BEGIN@12";
+	"Data::Dumper::BEGIN@25";
+	"Data::Dumper::BEGIN@763";
+	"Data::Dumper::CORE:qr";
+	"Data::Dumper::BEGIN@18";
+	"Data::Dumper::_vstring";
+}
+subgraph cluster_Internals {
+	label="Internals";
+	"Internals::SvREADONLY";
+}
+subgraph cluster_Exporter_Heavy {
+	label="Exporter::Heavy";
+	"Exporter::Heavy::CORE:subst";
+	"Exporter::Heavy::BEGIN@3";
+	"Exporter::Heavy::heavy_export";
+	"Exporter::Heavy::BEGIN@202";
+	"Exporter::Heavy::BEGIN@4";
+	"Exporter::Heavy::CORE:match";
+}
+subgraph cluster_constant {
+	label="constant";
+	"constant::BEGIN@4";
+	"constant::BEGIN@3";
+	"constant::import";
+	"constant::BEGIN@2";
+	"constant::CORE:regcomp";
+	"constant::BEGIN@24";
+	"constant::BEGIN@90";
+	"constant::CORE:subst";
+	"constant::CORE:match";
+	"constant::BEGIN@65";
+	"constant::BEGIN@40";
+	"constant::BEGIN@141";
+	"constant::CORE:qr";
+}
+subgraph cluster_mro {
+	label="mro";
+	"mro::method_changed_in";
+}
+subgraph cluster_strict {
+	label="strict";
+	"strict::CORE:match";
+	"strict::BEGIN@7";
+	"strict::bits";
+	"strict::import";
+	"strict::unimport";
+}
+subgraph cluster_utf8 {
+	label="utf8";
+	"utf8::encode";
+}
+subgraph cluster_overload {
+	label="overload";
+	"overload::BEGIN@81";
+	"overload::import";
+	"overload::BEGIN@112";
+	"overload::OVERLOAD";
+	"overload::BEGIN@142";
+}
+subgraph cluster_HTML_Parser {
+	label="HTML::Parser";
+	"HTML::Parser::BEGIN@4";
+	"HTML::Parser::BEGIN@3";
+}
+subgraph cluster_HTTP_Status {
+	label="HTTP::Status";
+	"HTTP::Status::CORE:match";
+	"HTTP::Status::BEGIN@3";
+	"HTTP::Status::BEGIN@10";
+	"HTTP::Status::BEGIN@4";
+	"HTTP::Status::CORE:subst";
+}
+subgraph cluster_URI {
+	label="URI";
+	"URI::BEGIN@21";
+	"URI::BEGIN@22";
+	"URI::BEGIN@4";
+	"URI::BEGIN@3";
+	"URI::BEGIN@24";
+	"URI::BEGIN@129";
+}
+subgraph cluster_AOC_Utils {
+	label="AOC::Utils";
+	"AOC::Utils::CORE:readline";
+	"AOC::Utils::reduce";
+	"AOC::Utils::BEGIN@290";
+	"AOC::Utils::BEGIN@4";
+	"AOC::Utils::BEGIN@10";
+	"AOC::Utils::BEGIN@3";
+	"AOC::Utils::__ANON__";
+	"AOC::Utils::slurp";
+	"AOC::Utils::BEGIN@8";
+	"AOC::Utils::BEGIN@9";
+}
+subgraph cluster_main {
+	label="main";
+	"main::__ANON__[./solve.pl:279]";
+	"main::manhattanDistance";
+	"main::BEGIN@4";
+	"main::solve";
+	"main::__ANON__[./solve.pl:322]";
+	"main::RUNTIME";
+	"main::BEGIN@3";
+	"main::solveTwo";
+	"main::binsearch";
+	"main::BEGIN@10";
+	"main::BEGIN@7";
+	"main::NULL";
+	"main::compare";
+	"main::__ANON__[./solve.pl:214]";
+	"main::BEGIN@8";
+	"main::neighbours";
+	"main::BEGIN@6";
+}
+subgraph cluster_URI_Escape {
+	label="URI::Escape";
+	"URI::Escape::BEGIN@3";
+	"URI::Escape::BEGIN@146";
+	"URI::Escape::CORE:qr";
+	"URI::Escape::BEGIN@4";
+	"URI::Escape::BEGIN@140";
+}
+subgraph cluster_AOC_Base {
+	label="AOC::Base";
+	"AOC::Base::BEGIN@4";
+	"AOC::Base::BEGIN@3";
+	"AOC::Base::BEGIN@8";
+	"AOC::Base::CORE:print";
+	"AOC::Base::BEGIN@10";
+	"AOC::Base::main";
+}
+subgraph cluster_Storable {
+	label="Storable";
+	"Storable::BEGIN@81";
+	"Storable::BEGIN@40";
+	"Storable::BEGIN@64";
+	"Storable::BEGIN@42";
+	"Storable::CORE:qr";
+	"Storable::BEGIN@487";
+}
+subgraph cluster_Sub_Util {
+	label="Sub::Util";
+	"Sub::Util::BEGIN@7";
+	"Sub::Util::BEGIN@8";
+}
+subgraph cluster_Fcntl {
+	label="Fcntl";
+	"Fcntl::BEGIN@58";
+}
+subgraph cluster_HTTP_Date {
+	label="HTTP::Date";
+	"HTTP::Date::BEGIN@3";
+}
+subgraph cluster_UNIVERSAL {
+	label="UNIVERSAL";
+	"UNIVERSAL::VERSION";
+	"UNIVERSAL::isa";
+}
+subgraph cluster_XSLoader {
+	label="XSLoader";
+	"XSLoader::load";
+}
+subgraph cluster_Time_Local {
+	label="Time::Local";
+	"Time::Local::BEGIN@10";
+	"Time::Local::BEGIN@29";
+	"Time::Local::BEGIN@28";
+	"Time::Local::BEGIN@5";
+	"Time::Local::CORE:pack";
+	"Time::Local::_daygm";
+	"Time::Local::BEGIN@3";
+	"Time::Local::BEGIN@6";
+	"Time::Local::BEGIN@30";
+}
+subgraph cluster_HTML_Entities {
+	label="HTML::Entities";
+	"HTML::Entities::BEGIN@140";
+	"HTML::Entities::BEGIN@139";
+	"HTML::Entities::BEGIN@138";
+	"HTML::Entities::CORE:subst";
+}
+subgraph cluster_vars {
+	label="vars";
+	"vars::BEGIN@7";
+	"vars::BEGIN@8";
+	"vars::import";
+	"vars::BEGIN@3";
+	"vars::CORE:match";
+}
+subgraph cluster_HTTP_Message {
+	label="HTTP::Message";
+	"HTTP::Message::BEGIN@652";
+	"HTTP::Message::BEGIN@4";
+	"HTTP::Message::BEGIN@3";
+}
+subgraph cluster_base {
+	label="base";
+	"base::BEGIN@4";
+	"base::import";
+	"base::__ANON__[base.pm:76]";
+	"base::has_fields";
+	"base::has_attr";
+	"base::CORE:subst";
+	"base::CORE:match";
+}
+subgraph cluster_Carp {
+	label="Carp";
+	"Carp::BEGIN@169";
+	"Carp::BEGIN@95";
+	"Carp::BEGIN@61";
+	"Carp::_fetch_sub";
+	"Carp::BEGIN@6";
+	"Carp::BEGIN@137";
+	"Carp::BEGIN@751";
+	"Carp::BEGIN@256";
+	"Carp::BEGIN@5";
+	"Carp::BEGIN@188";
+	"Carp::_univ_mod_loaded";
+	"Carp::BEGIN@730";
+	"Carp::BEGIN@4";
+	"Carp::BEGIN@574";
+	"Carp::BEGIN@296";
+	"Carp::BEGIN@744";
+	"Carp::BEGIN@1";
+	"Carp::BEGIN@49";
+	"Carp::BEGIN@73";
+	"Carp::BEGIN@3";
+}
+subgraph cluster_overloading {
+	label="overloading";
+	"overloading::BEGIN@2";
+	"overloading::unimport";
+}
+subgraph cluster_Try_Tiny_ScopeGuard {
+	label="Try::Tiny::ScopeGuard";
+	"Try::Tiny::ScopeGuard::BEGIN@167";
+}
+subgraph cluster_parent {
+	label="parent";
+	"parent::BEGIN@21";
+	"parent::BEGIN@2";
+	"parent::CORE:subst";
+	"parent::import";
+}
+subgraph cluster_LWP_UserAgent {
+	label="LWP::UserAgent";
+	"LWP::UserAgent::BEGIN@9";
+	"LWP::UserAgent::BEGIN@8";
+	"LWP::UserAgent::BEGIN@395";
+	"LWP::UserAgent::BEGIN@1";
+	"LWP::UserAgent::BEGIN@10";
+	"LWP::UserAgent::BEGIN@12";
+	"LWP::UserAgent::BEGIN@5";
+	"LWP::UserAgent::BEGIN@15";
+	"LWP::UserAgent::BEGIN@13";
+	"LWP::UserAgent::BEGIN@7";
+	"LWP::UserAgent::BEGIN@16";
+	"LWP::UserAgent::BEGIN@3";
+}
+subgraph cluster_warnings_register {
+	label="warnings::register";
+	"warnings::register::import";
+}
+subgraph cluster_List_Util {
+	label="List::Util";
+	"List::Util::BEGIN@9";
+	"List::Util::BEGIN@10";
+	"List::Util::BEGIN@31";
+}
+subgraph cluster_LWP_Protocol {
+	label="LWP::Protocol";
+	"LWP::Protocol::BEGIN@3";
+	"LWP::Protocol::BEGIN@11";
+	"LWP::Protocol::BEGIN@9";
+	"LWP::Protocol::BEGIN@7";
+	"LWP::Protocol::BEGIN@8";
+	"LWP::Protocol::BEGIN@10";
+	"LWP::Protocol::BEGIN@61";
+}
+subgraph cluster_HTTP_Headers {
+	label="HTTP::Headers";
+	"HTTP::Headers::BEGIN@4";
+	"HTTP::Headers::BEGIN@8";
+	"HTTP::Headers::BEGIN@3";
+}
+subgraph cluster_HTTP_Response {
+	label="HTTP::Response";
+	"HTTP::Response::BEGIN@3";
+	"HTTP::Response::BEGIN@8";
+	"HTTP::Response::BEGIN@10";
+	"HTTP::Response::BEGIN@4";
+}
+subgraph cluster_AOC_Math {
+	label="AOC::Math";
+	"AOC::Math::BEGIN@4";
+	"AOC::Math::maxRef";
+	"AOC::Math::__ANON__[AOC/Math.pm:66]";
+	"AOC::Math::reduce";
+	"AOC::Math::BEGIN@3";
+	"AOC::Math::max";
+}
+"main::solveTwo" -> "main::solve";
+"URI::BEGIN@22" -> "URI::Escape::BEGIN@140";
+"HTTP::Headers::BEGIN@4" -> "warnings::import";
+"HTTP::Response::BEGIN@4" -> "warnings::import";
+"Sub::Util::BEGIN@8" -> "warnings::import";
+"Try::Tiny::BEGIN@8" -> "warnings::import";
+"URI::BEGIN@4" -> "warnings::import";
+"List::Util::BEGIN@10" -> "warnings::import";
+"URI::Escape::BEGIN@4" -> "warnings::import";
+"AOC::Math::BEGIN@4" -> "warnings::import";
+"overloading::BEGIN@2" -> "warnings::import";
+"AOC::Base::BEGIN@4" -> "warnings::import";
+"Scalar::Util::BEGIN@10" -> "warnings::import";
+"main::BEGIN@3" -> "warnings::import";
+"Carp::BEGIN@5" -> "warnings::import";
+"HTTP::Request::BEGIN@4" -> "warnings::import";
+"HTTP::Status::BEGIN@4" -> "warnings::import";
+"AOC::Utils::BEGIN@4" -> "warnings::import";
+"HTTP::Message::BEGIN@4" -> "warnings::import";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@5";
+"main::solve" -> "main::neighbours";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@8";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@40";
+"main::BEGIN@6" -> "AOC::Base::BEGIN@3";
+"AOC::Utils::BEGIN@10" -> "HTML::Parser::BEGIN@4";
+"AOC::Utils::BEGIN@10" -> "HTML::Entities::BEGIN@138";
+"HTTP::Response::BEGIN@10" -> "HTTP::Status::BEGIN@3";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@395";
+"warnings::register::import" -> "warnings::register_categories";
+"parent::import" -> "parent::CORE:subst";
+"URI::BEGIN@22" -> "URI::Escape::BEGIN@146";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@95";
+"base::import" -> "HTTP::Message::BEGIN@4";
+"LWP::UserAgent::BEGIN@5" -> "LWP::UserAgent::BEGIN@1";
+"AOC::Base::BEGIN@8" -> "AOC::Utils::BEGIN@9";
+"AOC::Math::max" -> "AOC::Math::maxRef";
+"constant::import" -> "constant::CORE:subst";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::_daygm";
+"Time::Local::BEGIN@10" -> "parent::BEGIN@2";
+"AOC::Math::maxRef" -> "AOC::Math::reduce";
+"HTML::Parser::BEGIN@4" -> "vars::BEGIN@3";
+"overload::BEGIN@112" -> "overloading::unimport";
+"Carp::BEGIN@1" -> "overloading::unimport";
+"overload::BEGIN@81" -> "overloading::unimport";
+"constant::import" -> "constant::CORE:regcomp";
+"base::__ANON__[base.pm:76]" -> "base::CORE:subst";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@751";
+"Try::Tiny::BEGIN@16" -> "Sub::Util::BEGIN@7";
+"HTML::Parser::BEGIN@4" -> "vars::BEGIN@7";
+"base::__ANON__[base.pm:76]" -> "utf8::encode";
+"Carp::BEGIN@137" -> "Carp::_univ_mod_loaded";
+"main::NULL" -> "main::BEGIN@8";
+"Exporter::Heavy::heavy_export" -> "Exporter::Heavy::CORE:match";
+"main::BEGIN@4" -> "strict::BEGIN@7";
+"Time::Local::BEGIN@10" -> "parent::import";
+"Try::Tiny::BEGIN@16" -> "List::Util::BEGIN@31";
+"main::compare" -> "main::manhattanDistance";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@25";
+"AOC::Utils::reduce" -> "main::__ANON__[./solve.pl:322]";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@21";
+"main::solve" -> "AOC::Math::max";
+"main::solveTwo" -> "AOC::Math::max";
+"Try::Tiny::BEGIN@16" -> "List::Util::BEGIN@9";
+"base::import" -> "UNIVERSAL::isa";
+"AOC::Base::BEGIN@8" -> "AOC::Utils::BEGIN@8";
+"Exporter::import" -> "Exporter::export";
+"LWP::UserAgent::BEGIN@5" -> "base::BEGIN@4";
+"constant::import" -> "Internals::SvREADONLY";
+"constant::BEGIN@24" -> "Internals::SvREADONLY";
+"URI::BEGIN@22" -> "URI::Escape::CORE:qr";
+"main::__ANON__[./solve.pl:214]" -> "main::compare";
+"main::BEGIN@3" -> "warnings::CORE:match";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::CORE:qr";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::ScopeGuard::BEGIN@167";
+"LWP::UserAgent::BEGIN@8" -> "HTTP::Request::BEGIN@3";
+"base::import" -> "URI::BEGIN@21";
+"HTTP::Response::BEGIN@10" -> "HTTP::Status::BEGIN@4";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@10";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@8";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::BEGIN@7";
+"warnings::import" -> "warnings::_bits";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@29";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@278";
+"AOC::Base::main" -> "AOC::Base::CORE:print";
+"AOC::Utils::BEGIN@10" -> "HTML::Entities::CORE:subst";
+"AOC::Utils::BEGIN@10" -> "HTML::Parser::BEGIN@3";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@3";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@16";
+"HTTP::Response::BEGIN@10" -> "HTTP::Status::BEGIN@10";
+"Storable::BEGIN@81" -> "Fcntl::BEGIN@58";
+"overload::import" -> "overload::OVERLOAD";
+"Exporter::as_heavy" -> "Exporter::CORE:subst";
+"Exporter::import" -> "Exporter::CORE:subst";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@61";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@9";
+"LWP::UserAgent::BEGIN@9" -> "HTTP::Response::BEGIN@3";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@188";
+"URI::BEGIN@24" -> "overload::BEGIN@81";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@15";
+"main::NULL" -> "main::BEGIN@10";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@730";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@90";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@12";
+"base::import" -> "HTTP::Headers::BEGIN@3";
+"Time::Local::BEGIN@10" -> "parent::BEGIN@21";
+"main::BEGIN@6" -> "AOC::Base::BEGIN@4";
+"Exporter::export" -> "Exporter::as_heavy";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@65";
+"base::import" -> "base::has_fields";
+"base::import" -> "Storable::BEGIN@487";
+"Try::Tiny::BEGIN@16" -> "UNIVERSAL::VERSION";
+"URI::Escape::BEGIN@140" -> "UNIVERSAL::VERSION";
+"Try::Tiny::BEGIN@10" -> "UNIVERSAL::VERSION";
+"LWP::UserAgent::BEGIN@15" -> "UNIVERSAL::VERSION";
+"LWP::UserAgent::BEGIN@15" -> "Scalar::Util::BEGIN@10";
+"Data::Dumper::BEGIN@21" -> "constant::CORE:qr";
+"AOC::Base::BEGIN@8" -> "AOC::Utils::BEGIN@290";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@7";
+"LWP::UserAgent::BEGIN@10" -> "HTTP::Date::BEGIN@3";
+"URI::BEGIN@24" -> "overload::BEGIN@142";
+"base::import" -> "URI::BEGIN@3";
+"Data::Dumper::BEGIN@278" -> "Data::Dumper::_vstring";
+"Carp::BEGIN@169" -> "Carp::BEGIN@1";
+"AOC::Base::main" -> "AOC::Utils::slurp";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@10";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@141";
+"AOC::Utils::BEGIN@3" -> "strict::import";
+"List::Util::BEGIN@9" -> "strict::import";
+"HTTP::Response::BEGIN@3" -> "strict::import";
+"LWP::UserAgent::BEGIN@3" -> "strict::import";
+"HTTP::Message::BEGIN@3" -> "strict::import";
+"main::BEGIN@4" -> "strict::import";
+"Fcntl::BEGIN@58" -> "strict::import";
+"LWP::Protocol::BEGIN@7" -> "strict::import";
+"HTTP::Headers::BEGIN@3" -> "strict::import";
+"constant::BEGIN@3" -> "strict::import";
+"URI::Escape::BEGIN@3" -> "strict::import";
+"parent::BEGIN@2" -> "strict::import";
+"vars::BEGIN@8" -> "strict::import";
+"base::BEGIN@4" -> "strict::import";
+"Carp::BEGIN@4" -> "strict::import";
+"AOC::Base::BEGIN@3" -> "strict::import";
+"AOC::Math::BEGIN@3" -> "strict::import";
+"HTTP::Request::BEGIN@3" -> "strict::import";
+"Scalar::Util::BEGIN@9" -> "strict::import";
+"URI::BEGIN@3" -> "strict::import";
+"HTML::Parser::BEGIN@3" -> "strict::import";
+"HTTP::Status::BEGIN@3" -> "strict::import";
+"Time::Local::BEGIN@3" -> "strict::import";
+"HTML::Entities::BEGIN@138" -> "strict::import";
+"Try::Tiny::BEGIN@7" -> "strict::import";
+"HTTP::Date::BEGIN@3" -> "strict::import";
+"Sub::Util::BEGIN@7" -> "strict::import";
+"Exporter::Heavy::BEGIN@3" -> "strict::import";
+"Exporter::as_heavy" -> "Exporter::Heavy::BEGIN@4";
+"AOC::Base::BEGIN@8" -> "AOC::Utils::BEGIN@3";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@2";
+"main::NULL" -> "main::BEGIN@3";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@256";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@10";
+"HTML::Parser::BEGIN@4" -> "vars::BEGIN@8";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::BEGIN@8";
+"main::solve" -> "main::binsearch";
+"Data::Dumper::BEGIN@763" -> "bytes::import";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@7";
+"main::NULL" -> "main::BEGIN@7";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@49";
+"Time::Local::BEGIN@29" -> "constant::import";
+"Time::Local::BEGIN@28" -> "constant::import";
+"Data::Dumper::BEGIN@21" -> "constant::import";
+"Data::Dumper::BEGIN@278" -> "constant::import";
+"Time::Local::BEGIN@30" -> "constant::import";
+"Try::Tiny::ScopeGuard::BEGIN@167" -> "constant::import";
+"main::BEGIN@6" -> "AOC::Base::BEGIN@10";
+"Storable::BEGIN@487" -> "Storable::CORE:qr";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@763";
+"HTTP::Response::BEGIN@10" -> "HTTP::Status::CORE:subst";
+"AOC::Math::reduce" -> "AOC::Math::__ANON__[AOC/Math.pm:66]";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::BEGIN@10";
+"base::import" -> "HTTP::Headers::BEGIN@8";
+"base::import" -> "Storable::BEGIN@64";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@61";
+"Exporter::import" -> "Exporter::CORE:match";
+"main::BEGIN@6" -> "AOC::Base::BEGIN@8";
+"LWP::UserAgent::BEGIN@8" -> "HTTP::Request::BEGIN@4";
+"Carp::BEGIN@61" -> "Carp::_fetch_sub";
+"Carp::BEGIN@73" -> "Carp::_fetch_sub";
+"Carp::BEGIN@137" -> "Carp::_fetch_sub";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@6";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@9";
+"constant::import" -> "mro::method_changed_in";
+"AOC::Utils::slurp" -> "AOC::Utils::CORE:readline";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@23";
+"URI::BEGIN@22" -> "URI::Escape::BEGIN@4";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@5";
+"Time::Local::_daygm" -> "Time::Local::CORE:pack";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@73";
+"AOC::Utils::BEGIN@10" -> "XSLoader::load";
+"base::import" -> "XSLoader::load";
+"Try::Tiny::BEGIN@16" -> "XSLoader::load";
+"Data::Dumper::BEGIN@25" -> "XSLoader::load";
+"Storable::BEGIN@81" -> "XSLoader::load";
+"strict::BEGIN@7" -> "strict::CORE:match";
+"AOC::Utils::BEGIN@10" -> "HTML::Entities::BEGIN@139";
+"main::NULL" -> "main::BEGIN@4";
+"vars::import" -> "vars::CORE:match";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@28";
+"base::import" -> "URI::BEGIN@129";
+"HTML::Entities::BEGIN@139" -> "vars::import";
+"HTML::Entities::BEGIN@140" -> "vars::import";
+"HTML::Parser::BEGIN@4" -> "vars::import";
+"base::import" -> "HTTP::Headers::BEGIN@4";
+"AOC::Utils::BEGIN@10" -> "HTML::Entities::BEGIN@140";
+"base::import" -> "URI::BEGIN@4";
+"LWP::UserAgent::BEGIN@8" -> "HTTP::Request::BEGIN@8";
+"Storable::BEGIN@64" -> "warnings::unimport";
+"Carp::BEGIN@6" -> "warnings::unimport";
+"Exporter::Heavy::BEGIN@202" -> "warnings::unimport";
+"Carp::BEGIN@744" -> "warnings::unimport";
+"LWP::UserAgent::BEGIN@15" -> "Scalar::Util::BEGIN@9";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::BEGIN@16";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@6";
+"main::BEGIN@7" -> "AOC::Math::BEGIN@3";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@5";
+"AOC::Base::main" -> "main::solveTwo";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@574";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@744";
+"AOC::Base::BEGIN@8" -> "AOC::Utils::BEGIN@10";
+"AOC::Utils::BEGIN@9" -> "AOC::Utils::__ANON__";
+"AOC::Utils::BEGIN@10" -> "AOC::Utils::__ANON__";
+"LWP::UserAgent::BEGIN@10" -> "Time::Local::BEGIN@30";
+"main::solveTwo" -> "AOC::Utils::reduce";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@18";
+"main::BEGIN@7" -> "Exporter::import";
+"main::BEGIN@8" -> "Exporter::import";
+"AOC::Base::BEGIN@10" -> "Exporter::import";
+"main::BEGIN@6" -> "Exporter::import";
+"AOC::Utils::BEGIN@290" -> "Exporter::import";
+"main::BEGIN@10" -> "Exporter::import";
+"LWP::UserAgent::BEGIN@15" -> "Exporter::import";
+"Storable::BEGIN@40" -> "Exporter::import";
+"AOC::Base::BEGIN@8" -> "Exporter::import";
+"LWP::Protocol::BEGIN@11" -> "Exporter::import";
+"URI::Escape::BEGIN@140" -> "Exporter::import";
+"AOC::Utils::BEGIN@8" -> "Exporter::import";
+"Time::Local::BEGIN@6" -> "Exporter::import";
+"Storable::BEGIN@81" -> "Exporter::import";
+"Try::Tiny::BEGIN@13" -> "Exporter::import";
+"LWP::UserAgent::BEGIN@16" -> "Exporter::import";
+"Try::Tiny::BEGIN@10" -> "Exporter::import";
+"base::import" -> "Storable::BEGIN@81";
+"vars::BEGIN@7" -> "warnings::register::import";
+"overload::BEGIN@142" -> "warnings::register::import";
+"constant::BEGIN@4" -> "warnings::register::import";
+"base::import" -> "Storable::BEGIN@42";
+"LWP::UserAgent::BEGIN@9" -> "HTTP::Response::BEGIN@4";
+"URI::BEGIN@24" -> "overload::import";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@4";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@24";
+"Exporter::Heavy::heavy_export" -> "Exporter::Heavy::CORE:subst";
+"base::import" -> "base::__ANON__[base.pm:76]";
+"LWP::UserAgent::BEGIN@9" -> "HTTP::Response::BEGIN@8";
+"LWP::UserAgent::BEGIN@9" -> "HTTP::Response::BEGIN@10";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@169";
+"main::BEGIN@7" -> "AOC::Math::BEGIN@4";
+"Exporter::import" -> "Exporter::Heavy::heavy_export";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::BEGIN@13";
+"base::import" -> "URI::BEGIN@22";
+"constant::import" -> "constant::CORE:match";
+"Try::Tiny::BEGIN@16" -> "List::Util::BEGIN@10";
+"main::binsearch" -> "main::__ANON__[./solve.pl:214]";
+"main::NULL" -> "main::BEGIN@6";
+"base::import" -> "HTTP::Message::BEGIN@3";
+"Carp::BEGIN@169" -> "overloading::BEGIN@2";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@3";
+"base::import" -> "base::has_attr";
+"base::import" -> "URI::BEGIN@24";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@11";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@137";
+"Try::Tiny::BEGIN@16" -> "Sub::Util::BEGIN@8";
+"strict::import" -> "strict::bits";
+"strict::unimport" -> "strict::bits";
+"AOC::Utils::BEGIN@8" -> "Data::Dumper::BEGIN@12";
+"parent::BEGIN@21" -> "strict::unimport";
+"LWP::UserAgent::BEGIN@395" -> "strict::unimport";
+"constant::BEGIN@90" -> "strict::unimport";
+"Carp::BEGIN@730" -> "strict::unimport";
+"Carp::BEGIN@188" -> "strict::unimport";
+"Carp::BEGIN@751" -> "strict::unimport";
+"Carp::BEGIN@256" -> "strict::unimport";
+"HTTP::Message::BEGIN@652" -> "strict::unimport";
+"URI::BEGIN@129" -> "strict::unimport";
+"Exporter::Heavy::BEGIN@4" -> "strict::unimport";
+"LWP::Protocol::BEGIN@61" -> "strict::unimport";
+"constant::BEGIN@40" -> "strict::unimport";
+"constant::BEGIN@65" -> "strict::unimport";
+"constant::BEGIN@141" -> "strict::unimport";
+"List::Util::BEGIN@31" -> "strict::unimport";
+"LWP::UserAgent::BEGIN@13" -> "LWP::Protocol::BEGIN@3";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@3";
+"URI::BEGIN@22" -> "URI::Escape::BEGIN@3";
+"warnings::register_categories" -> "warnings::_mkMask";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@3";
+"AOC::Utils::reduce" -> "main::__ANON__[./solve.pl:279]";
+"Exporter::as_heavy" -> "Exporter::Heavy::BEGIN@202";
+"main::RUNTIME" -> "AOC::Base::main";
+"AOC::Base::BEGIN@8" -> "AOC::Utils::BEGIN@4";
+"HTTP::Response::BEGIN@10" -> "HTTP::Status::CORE:match";
+"base::import" -> "HTTP::Message::BEGIN@652";
+"LWP::UserAgent::BEGIN@5" -> "base::import";
+"HTTP::Request::BEGIN@8" -> "base::import";
+"HTTP::Response::BEGIN@8" -> "base::import";
+"LWP::Protocol::BEGIN@3" -> "base::import";
+"HTTP::Status::BEGIN@10" -> "base::import";
+"warnings::unimport" -> "warnings::_expand_bits";
+"warnings::_bits" -> "warnings::_expand_bits";
+"base::import" -> "Storable::BEGIN@40";
+"LWP::Protocol::BEGIN@11" -> "Try::Tiny::BEGIN@2";
+"Exporter::as_heavy" -> "Exporter::Heavy::BEGIN@3";
+"AOC::Utils::BEGIN@9" -> "LWP::UserAgent::BEGIN@13";
+"Data::Dumper::BEGIN@23" -> "Carp::BEGIN@296";
+"base::import" -> "base::CORE:match";
+"URI::BEGIN@24" -> "overload::BEGIN@112";
+"Data::Dumper::BEGIN@21" -> "constant::BEGIN@4";
+}

@@ -54,6 +54,12 @@ sub sortPathFn {
 	return sub {
 		# my ($a, $b) = @_;
 
+		return $a->[2] + manhattan(@$a[0,1], $tX, $tY) <=> $b->[2] + manhattan(@$b[0,1], $tX, $tY);
+	};
+
+	return sub {
+		# my ($a, $b) = @_;
+
 		# totals
 		my $totalCMP = $a->[2] <=> $b->[2];
 

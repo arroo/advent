@@ -12,6 +12,7 @@ our %EXPORT_TAGS = (
 	'all' => [qw(
 		vanEck
 		vanEckIter
+		combinations
 	)],
 );
 our @EXPORT_OK = (@{$EXPORT_TAGS{'all'}});
@@ -77,6 +78,31 @@ sub vanEckIter {
 		$turn++;
 
 		return $last;
+	};
+}
+
+sub combinations {
+	my ($r, $list) = @_;
+
+	# default to 2
+	# implement more later
+	my ($i, $j) = (0, 1);
+
+	return sub {
+		if ($i >= scalar(@$list)-1) {
+			return undef;
+		}
+
+		my @out = ($list->[$i], $list->[$j]);
+
+		$j++;
+
+		if ($j >= scalar(@$list)) {
+			$i++;
+			$j = $i+1;
+		}
+
+		return @out;
 	};
 }
 
